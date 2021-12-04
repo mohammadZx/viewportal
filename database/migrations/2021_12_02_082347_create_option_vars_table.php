@@ -18,8 +18,8 @@ class CreateOptionVarsTable extends Migration
             $table->bigInteger('option_id');
             $table->string('name');
             $table->text('content')->nullable();
-            $table->bigInteger('price');
-            $table->bigInteger('site_commission')->nullable()->default(10000);
+            $table->bigInteger('price')->default(0);
+            $table->bigInteger('site_commission')->nullable()->default(10);
             $table->string('commission_type')->nullable()->default('percent');
             $table->timestamps();
         });

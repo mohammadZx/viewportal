@@ -17,6 +17,7 @@ class CreateOptionTypesTable extends Migration
             $table->id();
             $table->bigInteger('option_id');
             $table->string('name');
+            $table->text('content')->nullable();
             $table->bigInteger('price')->nullable()->default(0);
             $table->bigInteger('site_commission')->nullable()->default(100);
             $table->string('commission_type')->nullable()->default('percent');

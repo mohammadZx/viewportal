@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use \App\Meta\MetaHandler,\App\Options\DateStructure;
+
 
     /**
      * The attributes that are mass assignable.

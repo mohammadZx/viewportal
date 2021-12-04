@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OptionVar extends Model
+class Comment extends Model
 {
     use \App\Meta\MetaHandler,\App\Options\DateStructure;
 

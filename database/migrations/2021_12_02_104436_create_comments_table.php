@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRequestsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateRequestsTable extends Migration
      */
     public function up()
     {
-        Schema::create('requests', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('transactions_id');
-            $table->text('title');
-            $table->text('content')->nullable();
+            $table->bigInteger('user_id');
+            $table->bigInteger('request_id');
+            $table->bigInteger('parent_id')->default(0);
+            $table->text('content');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateRequestsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('requests');
+        Schema::dropIfExists('comments');
     }
 }
