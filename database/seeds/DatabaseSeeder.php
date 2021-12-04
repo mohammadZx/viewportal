@@ -11,7 +11,7 @@ use App\OptionVar;
 use App\Request;
 use App\Transaction;
 use App\User;
-
+use App\Role;
 class DatabaseSeeder extends Seeder
 {
     public $options = [
@@ -49,6 +49,48 @@ class DatabaseSeeder extends Seeder
         ]
     ];
 
+    public $roles = [
+        'add-option' => 'superadmin,admin',
+        'edit-option' => 'superadmin,admin',
+        'delete-option' => 'superadmin,admin',
+
+        'add-option-var' => 'superadmin,admin',
+        'edit-option-var' => 'superadmin,admin',
+        'delete-option-var' => 'superadmin,admin',
+
+        'add-option-type' => 'superadmin,admin',
+        'edit-option-type' => 'superadmin,admin',
+        'delete-option-type' => 'superadmin,admin',
+
+        'add-user' => 'superadmin,admin',
+        'edit-user' => 'superadmin,admin',
+        'delete-user' => 'superadmin,admin',
+
+        'see-request' => 'superadmin,admin,expert_one,expert_two',
+        'add-request' => 'superadmin,admin,expert_one,expert_two,customer',
+        'edit-request' => 'superadmin,admin,expert_one,expert_two,customer',
+        'delete-request' => 'superadmin,admin',
+
+        'see-attachment' => 'superadmin,admin',
+        'add-attachment' => 'superadmin,admin,expert_one,expert_two,customer',
+        'edit-attachment' => 'superadmin,admin',
+        'delete-attachment' => 'superadmin,admin',
+
+        'add-coupon' => 'superadmin,admin',
+        'edit-coupon' => 'superadmin,admin',
+        'delete-coupon' => 'superadmin,admin',
+
+        'add-comment' => 'superadmin,admin,expert_one,expert_two',
+        'edit-comment' => 'superadmin,admin,expert_one,expert_two',
+        'delete-comment' => 'superadmin,admin',
+        
+        'add-transaction' => 'superadmin,admin',
+        'edit-transaction' => 'superadmin,admin',
+        'delete-transaction' => 'superadmin,admin',
+
+        
+    ];
+
     public $optionsId = [];
     public $varsId = [];
     public $typesId = [];
@@ -74,6 +116,7 @@ class DatabaseSeeder extends Seeder
         $this->transactions();
         $this->requests();
         $this->attachments();
+        $this->roles();
 
     }
 
@@ -162,6 +205,7 @@ class DatabaseSeeder extends Seeder
             $obj->transactions_id = $val;
             $obj->title = $faker->title;
             $obj->content = $faker->paragraph;
+            $obj->status = arr_rand(['new', 'mark', 'hold', 'comment', 'finish']);
             $obj->save();
 
             // set attachment to meta_data table
@@ -176,6 +220,14 @@ class DatabaseSeeder extends Seeder
         for($n = 0; $n <= 40; $n++){
             $obj = new Attachment();
             $obj->src = "/uploads/" . date('Y') . "/" . date('m') . "/" . $n . ".jpg";
+            $obj->save();
+        }
+    }
+    public function roles(){
+        foreach($this->roles as $key => $value){
+            $obj = new Role();
+            $obj->option = $key;
+            $obj->access_role_name = $value;
             $obj->save();
         }
     }

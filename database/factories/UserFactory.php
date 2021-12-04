@@ -23,6 +23,7 @@ $factory->define(User::class, function (Faker $faker) {
         'phone' => $faker->phoneNumber(),
         'email' => $faker->unique()->safeEmail,
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'role' => arr_rand(['admin', 'customer', 'expert_one', 'expert_two']),
         'remember_token' => Str::random(10),
     ];
 });

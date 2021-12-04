@@ -46,4 +46,14 @@ class User extends Authenticatable
     public function transactions(){
         return $this->hasMany('App/Transaction', 'user_id');
     }
+
+    public function hasRole($accesses){
+        $status = false;
+        foreach($accesses as $val){
+            if($val == $this->attributes['role']){
+                $status = true;
+            }
+        }
+        return $status;
+    }
 }
