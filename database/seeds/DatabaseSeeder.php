@@ -108,6 +108,11 @@ class DatabaseSeeder extends Seeder
     {
         factory(User::class, 40)->create();
 
+        $user = User::find(1);
+        $user->email = "mohammad13yazdani@gmail.com";
+        $user->role = "superadmin";
+        $user->save();
+        
         $this->options();
         $this->vars();
         $this->types();

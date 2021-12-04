@@ -37632,6 +37632,13 @@ module.exports = function(module) {
 
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+jalaliDatepicker.startWatch({
+  separatorChar: "-"
+});
+$(document).ready(function () {
+  $('.select2').select2();
+});
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -37679,6 +37686,82 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
+/***/ "./resources/js/viewer-init.js":
+/*!*************************************!*\
+  !*** ./resources/js/viewer-init.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+init();
+
+function init() {
+  //generate image
+  var img = document.createElement("img");
+  var url = new URL(window.location.href);
+  var imageUrl = 'https://avatars.githubusercontent.com/u/39435053?v=4';
+  img.src = imageUrl;
+  img.style.display = "none";
+  document.getElementById("imgli").appendChild(img); //set width and height
+
+  var width = getWidth();
+  var heights = getHeight() - 63;
+  var heightsvie = getHeight() - 66;
+  document.getElementById("imageview").style.height = heights + "px";
+  document.getElementById("docs-pictures").style.height = heightsvie + "px";
+}
+
+function fliph() {
+  setTimeout(function () {
+    var flip = $("#fliph").attr("data-arguments");
+
+    if (flip == "[1]") {
+      $("#fliph").attr("data-arguments", "[-1]");
+    } else {
+      $("#fliph").attr("data-arguments", "[1]");
+    }
+  }, 10);
+}
+
+function flipv() {
+  setTimeout(function () {
+    var flip = $("#flipv").attr("data-arguments");
+
+    if (flip == "[1]") {
+      $("#flipv").attr("data-arguments", "[-1]");
+    } else {
+      $("#flipv").attr("data-arguments", "[1]");
+    }
+  }, 10);
+}
+
+function getWidth() {
+  return Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth, document.documentElement.offsetWidth, document.documentElement.clientWidth);
+}
+
+function getHeight() {
+  return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.documentElement.clientHeight);
+}
+
+$('.printv').click(function () {
+  printElement($('#viewer-container'));
+});
+
+function printElement(e) {
+  var ifr = document.createElement('iframe');
+  ifr.style = 'height: 0px; width: 0px; position: absolute';
+  document.body.appendChild(ifr);
+  $(e).clone().appendTo(ifr.contentDocument.body);
+  ifr.contentWindow.print();
+  ifr.parentElement.removeChild(ifr);
+}
+
+$('.closev').click(function () {
+  $('.viewer-container-l').toggleClass('active');
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -37691,13 +37774,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!*******************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/viewer-init.js ./resources/sass/app.scss ***!
+  \*******************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\view\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\view\resources\js\viewer-init.js */"./resources/js/viewer-init.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\view\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
