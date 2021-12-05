@@ -42,11 +42,11 @@
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('auth.login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('auth.register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -59,7 +59,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('auth.logout') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -73,19 +73,21 @@
             </div>
         </nav>
         <main class="py-4 container text-right" dir="rtl">
-            <div class="row">
+            <div class="row justify-content-md-center">
+                @auth()
                 <div class="col-md-3">
                     <div class="card">
                         @include('partials.menu')
                     </div>
                 </div>
-                <div class="col-md-9 ">
+                @endauth
+                <div class="@auth() col-md-9 @else col-md-6 @endauth ">
                     <div class="card">@yield('content')</div>        
                 </div>
             </div>
         </main>
     </div>
-        @include('partials.viewer')
+     
 
 </body>
 </html>

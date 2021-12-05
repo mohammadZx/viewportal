@@ -13,7 +13,19 @@ return [
     |
     */
 
-    'failed' => 'These credentials do not match our records.',
-    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-
+    'failed' => 'این اعتبارنامه ها با سوابق ما مطابقت ندارد.',
+    'throttle' => 'درخواست های زیادی برای ورود انجام شده. لطفا بعدا دوباره امتحان کنید.',
+    'register' => 'ثبت نام',
+    'login' => 'ورود',
+    'logout' => 'خروج',
+    'reset password' => 'بازنشانی رمز عبور',
+    'confirm password' => 'تکرار رمز عبور',
+    'rememper me' => 'مرا به یاد آور',
+    'forget password' => 'فراموشی رمز عبور',
+    'password' => 'رمز عبور',
+    'email' => 'ایمیل',
+    'name' => 'نام و نام خانوادگی',
+    'Confirm Password' => 'تغییر رمز عبور',
+    'Please confirm your password before continuing.' => 'لطفا رمز عبور خود را وارد نمایید',
+    
 ];

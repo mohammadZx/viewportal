@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Request as Req;
 class HomeController extends Controller
 {
     /**
@@ -23,6 +23,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $allTransactions = auth()->user()->transactions()->count();
+        $faildTransactions = auth()->user()->transactions()->where('status',0)->count();
+        $requests = Req::whereHas('transactions' , function($q){
+            $q->where('user_id', auth()->user()->id);
+        })->count();
+        return view('home', [
+            'allTransactions' => $allTransactions,
+            'faildTransactions' => $faildTransactions,
+            'requests' => $requests
+        ]);
     }
 }

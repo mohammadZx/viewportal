@@ -8,7 +8,7 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use App\Options\Uploader;
 class RegisterController extends Controller
 {
     /*
@@ -49,11 +49,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+            'password' => ['required', 'min:6'],
+        ];
+        
+        if(isset($data['type']) && $data['type'] == 'expert'){
+            $validator['type'] = ['required'];
+            $validator['shaba'] = ['required', 'max:255', 'min:16'];
+            $validator['cartmeli'] = ['required', 'file','max:300'];
+            $validator['nezampezeshki'] = ['required', 'file', 'max:300'];
+            $validator['nezampezeshkit'] = ['required', 'file' ,'max:300'];
+    
+        }
+        return Validator::make($data, $validator);
     }
 
     /**
@@ -64,10 +74,21 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        
+        if($data['type'] == 'expert'){
+            $cartMeli = Uploader::add($data['cartmeli']);
+            $nezampezeshki = Uploader::add($data['nezampezeshki']);
+            $nezampezeshkit = Uploader::add($data['nezampezeshkit']);
+
+            $user->setMeta('shaba', $data['shaba']);
+            $user->setMeta('nezame_dampezeshki', $nezampezeshki->id);
+            $user->setMeta('nezame_dampezeshki_t', $nezampezeshkit->id);
+        }
+        return $user;
     }
 }

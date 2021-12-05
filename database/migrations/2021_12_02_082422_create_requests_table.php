@@ -15,7 +15,7 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('transactions_id');
+            $table->bigInteger('transaction_id');
             $table->text('title');
             $table->text('content')->nullable();
             $table->string('status');

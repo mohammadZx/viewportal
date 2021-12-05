@@ -37630,6 +37630,18 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 jalaliDatepicker.startWatch({
@@ -37637,6 +37649,30 @@ jalaliDatepicker.startWatch({
 });
 $(document).ready(function () {
   $('.select2').select2();
+});
+$('.file').on('change', function () {
+  var _this$files = _slicedToArray(this.files, 1),
+      file = _this$files[0];
+
+  if (file) {
+    $(this).parent().children('img').attr('src', URL.createObjectURL(file));
+  }
+});
+
+if ($('#typeuserselect').val() == 'expert') {
+  $('#expert').css('display', 'block');
+  $('#expert input').attr('required', 'true');
+}
+
+$('#typeuserselect').on('change', function () {
+  if ($(this).val() == 'expert') {
+    $('#expert').css('display', 'block');
+    $('#expert input').attr('required', 'true');
+    return;
+  }
+
+  $('#expert').css('display', 'none');
+  $('#expert input').removeAttr('required');
 });
 
 /***/ }),
@@ -37693,72 +37729,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-init();
 
-function init() {
-  //generate image
-  var img = document.createElement("img");
-  var url = new URL(window.location.href);
-  var imageUrl = 'https://avatars.githubusercontent.com/u/39435053?v=4';
-  img.src = imageUrl;
-  img.style.display = "none";
-  document.getElementById("imgli").appendChild(img); //set width and height
-
-  var width = getWidth();
-  var heights = getHeight() - 63;
-  var heightsvie = getHeight() - 66;
-  document.getElementById("imageview").style.height = heights + "px";
-  document.getElementById("docs-pictures").style.height = heightsvie + "px";
-}
-
-function fliph() {
-  setTimeout(function () {
-    var flip = $("#fliph").attr("data-arguments");
-
-    if (flip == "[1]") {
-      $("#fliph").attr("data-arguments", "[-1]");
-    } else {
-      $("#fliph").attr("data-arguments", "[1]");
-    }
-  }, 10);
-}
-
-function flipv() {
-  setTimeout(function () {
-    var flip = $("#flipv").attr("data-arguments");
-
-    if (flip == "[1]") {
-      $("#flipv").attr("data-arguments", "[-1]");
-    } else {
-      $("#flipv").attr("data-arguments", "[1]");
-    }
-  }, 10);
-}
-
-function getWidth() {
-  return Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth, document.documentElement.offsetWidth, document.documentElement.clientWidth);
-}
-
-function getHeight() {
-  return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight, document.documentElement.offsetHeight, document.documentElement.clientHeight);
-}
-
-$('.printv').click(function () {
-  printElement($('#viewer-container'));
-});
-
-function printElement(e) {
-  var ifr = document.createElement('iframe');
-  ifr.style = 'height: 0px; width: 0px; position: absolute';
-  document.body.appendChild(ifr);
-  $(e).clone().appendTo(ifr.contentDocument.body);
-  ifr.contentWindow.print();
-  ifr.parentElement.removeChild(ifr);
-}
-
-$('.closev').click(function () {
-  $('.viewer-container-l').toggleClass('active');
-});
 
 /***/ }),
 

@@ -9,6 +9,6 @@ class Request extends Model
     use \App\Meta\MetaHandler, \App\Options\DateStructure;
 
     public function transactions(){
-        return $this->belongsTo('App/Transaction', 'transaction_id');
+        return $this->belongsTo('\App\Transaction', 'transaction_id');
     }
 }

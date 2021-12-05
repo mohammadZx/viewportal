@@ -1,6 +1,4 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-// Variables
 @import 'variables';
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
@@ -8,6 +6,91 @@
 @import url('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css');
 @import url('https://pro.fontawesome.com/releases/v5.10.0/css/all.css');
 @import url('./viewer.css');
+img {
+    max-width: 100%;
+}
+
+img.user-thumbnail {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: block;
+}
+
+.userinfo {
+    text-align: center;
+}
+
+hr.hr-text {
+    position: relative;
+    border: none;
+    height: 1px;
+    background: #999;
+    margin: 25px 0 15px 0 !important;
+}
+
+hr.hr-text::before {
+    content: attr(data-content);
+    display: inline-block;
+    background: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    color: #999;
+    padding: 0 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+}
+
 ul.list-group {
     padding-right: 0;
+}
+
+.sidenav a,
+.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+    outline: none;
+}
+
+.dropdown-container {
+    display: none;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+select,
+input,
+button,
+table,
+tr,
+td,
+th,
+option,
+a,
+ul,
+li {
+    font-family: IranSans, "IranSans" !important;
+}
+
+@font-face {
+    font-family: IranSans;
+    src: url('/font/IRANSansWeb.woff2') format('woff2'), url('/font/IRANSansWeb.woff') format('woff'), url('/font/IRANSansWeb.ttf') format('truetype');
 }
