@@ -52,13 +52,13 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role == 'customer';
         });
         Gate::define('expert', function($user){
-            return $user->role == 'expert_one' || $user->role == 'expert_two';
+            return ($user->role == 'expert_one' || $user->role == 'expert_two') && $user->getMeta('status', true) == 'active';
         });
         Gate::define('expert_one', function($user){
-            return $user->role == 'expert_one';
+            return ($user->role == 'expert_one') && $user->getMeta('status', true) == 'active';
         });
         Gate::define('expert_two', function($user){
-            return $user->role == 'expert_two';
+            return ($user->role == 'expert_two') && $user->getMeta('status', true) == 'active';
         });
         
     }

@@ -28,4 +28,13 @@ return [
     'Confirm Password' => 'تغییر رمز عبور',
     'Please confirm your password before continuing.' => 'لطفا رمز عبور خود را وارد نمایید',
     
+
+    // roles
+
+    'admin' => 'ادمین',
+    'expert' => 'کارشناس جدید',
+    'expert_one' => 'کارشناس اول',
+    'expert_two' => 'کارشناس دوم',
+    'customer' => 'کاربر',
+    'superadmin' => 'ادمین اصلی'
 ];

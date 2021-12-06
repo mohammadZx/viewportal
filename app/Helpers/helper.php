@@ -2,6 +2,7 @@
 use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;
 
+define('PRE_PAGE', 20);
 function arr_rand($arr){
     return $arr[array_rand($arr)];
 }
@@ -20,7 +21,7 @@ function toGregorian($date, $delimeter = '-', $concater = '-'){
 }
 function getAttachmentById($id){
     $attachment = \App\Attachment::find($id);
-    if($attachment) return $attachment->src;
+    if($attachment) return "/uploads/"  . $attachment->src;
     return null;
 }
 function getUserTumbnail(){

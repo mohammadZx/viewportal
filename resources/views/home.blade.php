@@ -7,6 +7,12 @@
 
     <div class="card-body">
 
+        @if(auth()->user()->getMeta('status', true) == 'disable')
+            <div class="alert alert-danger">
+            <i class="fa fa-exclamation-circle" aria-hidden="true"></i> 
+                کارشناس گرامی. حساب شما در حال حاضر غیر فعال می باشد و پس از تایید مدیران می توانید فعالیت خود را در سایت شروع کنید.
+            </div>
+        @endif
         <div class="row">
             <div class="col-sm-6 mt-3">
                 <div class="card">

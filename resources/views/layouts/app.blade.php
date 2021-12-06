@@ -73,6 +73,13 @@
             </div>
         </nav>
         <main class="py-4 container text-right" dir="rtl">
+        @if(session()->has('message'))
+                    <div class="row">
+                        <div class="col">
+                        <div class="alert alert-{{session()->get('message')['type']}}"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>  {{session()->get('message')['message']}}</div>
+                        </div>
+                    </div>
+        @endif
             <div class="row justify-content-md-center">
                 @auth()
                 <div class="col-md-3">

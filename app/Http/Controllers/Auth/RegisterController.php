@@ -53,11 +53,12 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'min:6'],
+            'phone' => ['required', 'size:11', 'unique:users'],
         ];
         
         if(isset($data['type']) && $data['type'] == 'expert'){
             $validator['type'] = ['required'];
-            $validator['shaba'] = ['required', 'max:255', 'min:16'];
+            $validator['shaba'] = ['required', 'max:255', 'min:22', 'max:26'];
             $validator['cartmeli'] = ['required', 'file','max:300'];
             $validator['nezampezeshki'] = ['required', 'file', 'max:300'];
             $validator['nezampezeshkit'] = ['required', 'file' ,'max:300'];
@@ -77,6 +78,8 @@ class RegisterController extends Controller
         $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'role' => $data['type'],
             'password' => Hash::make($data['password']),
         ]);
         
@@ -86,6 +89,8 @@ class RegisterController extends Controller
             $nezampezeshkit = Uploader::add($data['nezampezeshkit']);
 
             $user->setMeta('shaba', $data['shaba']);
+            $user->setMeta('status', 'disable');
+            $user->setMeta('cartmeli', $cartMeli->id);
             $user->setMeta('nezame_dampezeshki', $nezampezeshki->id);
             $user->setMeta('nezame_dampezeshki_t', $nezampezeshkit->id);
         }

@@ -40,22 +40,28 @@ Route::prefix('/user')->name('user.')->group(function(){
 
     /** -------------- PROFILE ---------------  **/
     Route::get('/change-password','Profile\ChangePassword@index')->name('password');
-    Route::post('/change-password','Profile\ChangePassword@update')->name('change_password');
+    Route::put('/change-password','Profile\ChangePassword@update')->name('change_password');
     Route::get('/change-data','Profile\UserDataManageMent@index')->name('data');
-    Route::post('/change-data','Profile\UserDataManageMent@update')->name('change_data');
+    Route::put('/change-data','Profile\UserDataManageMent@update')->name('change_data');
+
+     /** -------------- ADMIN EDITS USER ---------------  **/
+    Route::get('/change-password/{userid}','Profile\ChangePassword@index')->name('a_password')->middleware('can:admin,superadmin');
+    Route::put('/change-password/{userid}','Profile\ChangePassword@update')->name('a_change_password')->middleware('can:admin,superadmin');
+    Route::get('/change-data/{userid}','Profile\UserDataManageMent@index')->name('a_data')->middleware('can:admin,superadmin');
+    Route::put('/change-data/{userid}','Profile\UserDataManageMent@update')->name('a_change_data')->middleware('can:admin,superadmin');
 });
 
 
-Route::resource('user','User\UserController');
-Route::resource('request','Request\RequestController');
-Route::resource('transaction','Transaction\TransactionController');
-Route::resource('comment','Comment\CommentController');
-Route::resource('coupon','Coupon\CouponController');
-Route::resource('attachment','Attachment\Attachment');
+Route::resource('user','User\UserController')->middleware('can:admin,superadmin');
+Route::resource('request','Request\RequestController')->middleware('can:admin,superadmin,expert');
+Route::resource('transaction','Transaction\TransactionController')->middleware('can:admin,superadmin');
+Route::resource('comment','Comment\CommentController')->middleware('can:admin,superadmin,expert');
+Route::resource('coupon','Coupon\CouponController')->middleware('can:admin,superadmin');
+Route::resource('attachment','Attachment\Attachment')->middleware('can:admin,superadmin');
 Route::get('comment/reject', 'Comment\CommentController@reject')->name('comment.reject');
 
-Route::get('/wallet/order','User\UserWalletController@index')->name('wallet_order');
-Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wallet_order_status');
+Route::get('/wallet/order','User\UserWalletController@index')->name('wallet_order')->middleware('can:admin,superadmin');
+Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wallet_order_status')->middleware('can:admin,superadmin');
 
 
 

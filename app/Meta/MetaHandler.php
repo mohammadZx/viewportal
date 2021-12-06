@@ -37,8 +37,23 @@ trait MetaHandler{
             $query = $this->meta()->where('meta_key', $name);
         elseif(is_array($name))
             $query = $this->meta()->whereIn('id', $name)->orWhereIn('meta_key', $name);
-        
-        if($single) return $query->first();
+        if($single){
+            if($query->count() > 0){
+                return $query->first()->meta_value;
+            }
+            return false;
+        }
         return $query->get();
+    }
+
+    public function hasMeta($name){
+        $query = null;
+        if(is_integer($name))
+            $query = $this->meta()->where('id', $name);
+        elseif(is_string($name))
+            $query = $this->meta()->where('meta_key', $name);
+        elseif(is_array($name))
+            $query = $this->meta()->whereIn('id', $name)->orWhereIn('meta_key', $name);
+        return $query->count();
     }
 }
