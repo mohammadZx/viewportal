@@ -6,6 +6,14 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        window.csrftoken = '{{ csrf_token() }}'
+        @auth
+        window.userwallet = {{auth()->user()->wallet}}
+        @else
+        window.userwallet = 0
+        @endauth
+    </script>
 
     <title>{{ config('app.name', 'Viewer') }}</title>
 

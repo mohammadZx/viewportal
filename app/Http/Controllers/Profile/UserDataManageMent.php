@@ -57,12 +57,14 @@ class UserDataManageMent extends Controller
         $user->phone = $req->phone;
         $user->email = $req->email;
         $user->role = 'customer';
-        if($req->type == 'customer') $user->save();
-        $user->role = 'expert_one';
+        if($req->type == 'customer') $user->role = 'expert_one';    
+        if($userid && $req->admin_access) $user->role = 'admin';
         $user->save();
 
         $user->setMeta('shaba', $req->shaba,  0 , true);
-
+        if($userid && $req->user_status){
+            $user->setMeta('status', $req->user_status,  0 , true);
+        }
         if($req->cartmeli){
             $cartMeli = Uploader::add($req->cartmeli);
             $user->setMeta('cartmeli', $cartMeli->id,  0 , true);

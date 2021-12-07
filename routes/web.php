@@ -25,8 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::prefix('/user')->name('user.')->group(function(){
     /**  ----------- QUESTION AND GATEWAY ---------- **/
     Route::get('/question/send', 'Question\QuestionController@create')->name('send_question');
-    Route::post('/question/set', 'Question\QuestionController@set')->name('set_question');
-    Route::post('/question/set_coupon', 'Question\QuestionController@setCoupon')->name('set_coupon');
+    Route::post('/question/send', 'Question\QuestionController@set')->name('set_question');
     Route::get('/question/check', 'Question\QuestionController@check')->name('check_question');
     /**  ----------- END ------------- **/
 
@@ -53,6 +52,7 @@ Route::prefix('/user')->name('user.')->group(function(){
 
 
 Route::resource('user','User\UserController')->middleware('can:admin,superadmin');
+Route::post('/user/clear-wallet/{id}', 'User\UserController@clearingWallet')->middleware('can:admin,superadmin')->name('user.clear-wallet');
 Route::resource('request','Request\RequestController')->middleware('can:admin,superadmin,expert');
 Route::resource('transaction','Transaction\TransactionController')->middleware('can:admin,superadmin');
 Route::resource('comment','Comment\CommentController')->middleware('can:admin,superadmin,expert');
@@ -65,3 +65,6 @@ Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wal
 
 
 
+Route::get('/test',function(){
+ 
+});

@@ -11048,6 +11048,19 @@ li {
   font-family: IranSans, "IranSans" !important;
 }
 
+.unactive {
+  display: none;
+}
+
+.unactive.active {
+  display: block;
+}
+
+.alert-sm {
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
 @font-face {
   font-family: IranSans;
   src: url("/font/IRANSansWeb.woff2") format("woff2"), url("/font/IRANSansWeb.woff") format("woff"), url("/font/IRANSansWeb.ttf") format("truetype");

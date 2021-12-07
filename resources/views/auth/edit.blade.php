@@ -23,7 +23,25 @@
                 @enderror
             </div>
         </div>
-
+        @if($userid)
+        <div class="form-group row">
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="admin_access">دسترسی ادمین</label>
+                        <input type="checkbox" @if($user->role == 'admin') checked @endif name="admin_access" id="admin_access">
+                    </div>
+            </div>
+            <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="active">فعال</label>
+                        <input type="radio" @if($user->getMeta('status', true) == 'active') checked @endif name="user_status" value="active" id="active">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="disable">غیر فعال</label>
+                        <input type="radio" @if($user->getMeta('status', true) == 'disable') checked @endif name="user_status" value="disable" id="disable">
+                    </div>
+            </div>
+        </div>
+        @endif
         <div class="form-group row">
             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('auth.name') }} <strong class="text-danger">*</strong></label>
 

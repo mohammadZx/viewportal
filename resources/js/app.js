@@ -41,3 +41,16 @@ for (i = 0; i < dropdown.length; i++) {
         }
     });
 }
+
+$('form.confirm').on('submit', getConfirm)
+$('confirm:not(form)').on('click', getConfirm)
+
+function getConfirm() {
+    if (confirm('آیا از حذف این کاربر اطمینان دارید؟')) {
+        return true;
+    }
+    window.event.preventDefault();
+}
+$('.toggleclass').click(function() {
+    $($(this).attr('data-class')).toggleClass('active');
+})

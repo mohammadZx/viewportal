@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Pipeline\Pipeline;
 class UserController extends Controller
 {
     /**
@@ -14,7 +15,13 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->paginate(PRE_PAGE);
+        $pipelines = app(Pipeline::class)
+        ->send(User::query())
+        ->through([
+            new \App\QueryFilters\UserSearch(User::class),
+        ])
+        ->thenReturn();
+        $users = $pipelines->orderBy('id', 'DESC')->paginate(PRE_PAGE);
         return view('admin.user.index', ['users' => $users]);
     }
 
@@ -81,6 +88,33 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back()->with('message', [
+            'type' => 'success',
+            'message' => 'کاربر با موفقیت حذف شد'
+        ]);
+    }
+
+    public function clearingWallet(Request $req, $id){
+      
+        $req->validate([
+            'authority' => ['required']
+        ]);
+
+        $user = User::findOrFail($id);      
+        $user->transactions()->create([
+            'name' => strtoupper('wallet'),
+            'price' => $user->wallet,
+            'status' => 1,
+            'autority_code' => $req->authority,
+            'comment' => $req->has('comment') ? $req->comment : null
+        ]);
+        $user->wallet = 0;
+        $user->save();
+        return redirect()->back()->with('message',[
+            'type' => 'success',
+            'message' => 'کاربر تسویه شد. کیف پول ایشان خالی شد'
+        ]);
     }
 }
