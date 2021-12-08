@@ -2322,6 +2322,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "sendquestion",
   data: function data() {
@@ -3290,7 +3293,11 @@ var render = function () {
                 },
               }),
             ])
-          : _vm._e(),
+          : _c("div", [
+              _c("input", {
+                attrs: { type: "hidden", name: "gateway", value: "zarinpal" },
+              }),
+            ]),
         _vm._v(" "),
         _vm._m(0),
       ]

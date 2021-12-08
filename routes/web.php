@@ -27,6 +27,9 @@ Route::prefix('/user')->name('user.')->group(function(){
     Route::get('/question/send', 'Question\QuestionController@create')->name('send_question');
     Route::post('/question/send', 'Question\QuestionController@set')->name('set_question');
     Route::get('/question/check', 'Question\QuestionController@check')->name('check_question');
+
+    Route::get('/question/request/{id}', 'Question\QuestionRequestController@create')->name('question_request');
+    Route::post('/question/request/{id}', 'Question\QuestionRequestController@store')->name('question_request');
     /**  ----------- END ------------- **/
 
 

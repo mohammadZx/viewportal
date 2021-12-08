@@ -44,6 +44,9 @@
                 <label for="wallet">پرداخت با کیف پول: </label>
                 <input type="checkbox" name="gateway" id="wallet" value="wallet">
             </div>
+            <div v-else>
+                <input type="hidden" name="gateway"value="zarinpal">
+            </div>
             <div class="form-group">
                 <button class="btn btn-success btn-sm">ثبت و پرداخت</button>
             </div>

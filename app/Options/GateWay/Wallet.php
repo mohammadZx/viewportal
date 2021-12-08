@@ -13,11 +13,11 @@ class Wallet implements GateWayInterface{
     }
 
     public function send(){
-    
+        dd('wallet');
     }
 
     public function verify(){
-       
+       dd('verify wallet');
     }
 
 }

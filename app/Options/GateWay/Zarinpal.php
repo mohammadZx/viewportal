@@ -1,6 +1,7 @@
 <?php
 namespace App\Options\GateWay;
 use App\Options\GateWay\GateWayInterface;
+use Illuminate\Support\Facades\Redirect;
 class Zarinpal implements GateWayInterface{
     public $data;
     public $info = [
@@ -14,11 +15,11 @@ class Zarinpal implements GateWayInterface{
 
     public function send(){
         $data = array('MerchantID' => '0e01acea-45ba-11e9-b737-000c29344814',
-        'Amount' => $this->data->price,
-        'CallbackURL' => $this->data->callback,
-        'Description' => $this->data->description);
+        'Amount' => $this->data['price'],
+        'CallbackURL' => $this->data['callback'],
+        'Description' => $this->data['description']);
         $jsonData = json_encode($data);
-        $ch = curl_init('https://www.zarinpal.com/pg/rest/WebGate/PaymentRequest.json');
+        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentRequest.json');
         curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
@@ -35,7 +36,7 @@ class Zarinpal implements GateWayInterface{
         return  $err;
        } else {
         if ($result["Status"] == 100) {
-        header('Location: https://www.zarinpal.com/pg/StartPay/' . $result["Authority"]);
+        return Redirect::to('https://sandbox.zarinpal.com/pg/StartPay/' . $result["Authority"]);
         } else {
         return $result["Status"];
         }
@@ -43,12 +44,10 @@ class Zarinpal implements GateWayInterface{
     }
 
     public function verify(){
-
-
         $Authority = $_GET['Authority'];
-        $data = array('MerchantID' => '0e01acea-45ba-11e9-b737-000c29344814', 'Authority' => $Authority, 'Amount' => $this->data->price);
+        $data = array('MerchantID' => '0e01acea-45ba-11e9-b737-000c29344814', 'Authority' => $Authority, 'Amount' => $this->data['price']);
         $jsonData = json_encode($data);
-        $ch = curl_init('https://www.zarinpal.com/pg/rest/WebGate/PaymentVerification.json');
+        $ch = curl_init('https://sandbox.zarinpal.com/pg/rest/WebGate/PaymentVerification.json');
         curl_setopt($ch, CURLOPT_USERAGENT, 'ZarinPal Rest Api v1');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
