@@ -42,10 +42,11 @@
             </div>
             <div v-if="userwallet >= allPrice" class="form-group">
                 <label for="wallet">پرداخت با کیف پول: </label>
-                <input type="checkbox" name="gateway" id="wallet" value="wallet">
+                <input type="checkbox" name="gateway" v-model="gateway" value="wallet" id="wallet">
             </div>
-            <div v-else>
-                <input type="hidden" name="gateway"value="zarinpal">
+
+            <div v-if="gateway == false">
+                <input type="hidden" name="gateway" value="zarinpal">
             </div>
             <div class="form-group">
                 <button class="btn btn-success btn-sm">ثبت و پرداخت</button>
@@ -59,6 +60,7 @@ export default {
     data() {
         return{
             token: window.csrftoken,
+            gateway: false,
             userwallet: window.userwallet,
             options: {},
             selectedoptionId: 0,

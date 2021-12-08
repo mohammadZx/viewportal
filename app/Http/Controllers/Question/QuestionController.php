@@ -52,7 +52,7 @@ class QuestionController extends Controller
 
     }
 
-    public function check(Request $req){
+    public function check(){
         if(!session()->has('shop')) return redirect()->route('user')->with('message', [
             'type' => 'warning',
             'message' => 'اشکال در پرداخت'
@@ -62,9 +62,9 @@ class QuestionController extends Controller
         $gate = new GateWay($req['gateway'], $req);
         $verify = $gate->verify();
 
-        if($verify->status == 'success'){
+        if($verify->status == 1){
 
-            $coupon = Coupon::find($req['coupon']);
+            $coupon = Coupon::where('code',$req['coupon'])->first();
             $transaction = new Transaction();
             $transaction->name = 'CASE';
             $transaction->user_id = $req['user'];
@@ -78,7 +78,7 @@ class QuestionController extends Controller
             $transaction->save();
 
 
-            redirect()->route('user.question_request', $transaction->id)->with('message' , [
+            return redirect()->route('user.question_request', $transaction->id)->with('message' , [
                 'type' => 'success',
                 'message' => 'پرداخت شما موفیت آمیز بود. در این قسمت سوال خود را بپرسید.'
             ]);

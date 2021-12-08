@@ -67,7 +67,7 @@ class Zarinpal implements GateWayInterface{
         $dataShop['status'] = 1;
         $dataShop['authority'] = $result['RefID'];
         }
-        return $dataShop;
+        return (object) $dataShop;
     }
 
 }

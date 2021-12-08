@@ -1,6 +1,6 @@
 <?php
 namespace App\Options\GateWay;
-
+use Illuminate\Support\Facades\Redirect;
 class GateWay{
     public $gateWay;
     public $data;
@@ -18,10 +18,19 @@ class GateWay{
     }
 
     public function send(){
+        if($this->data['price'] == 0){
+            return Redirect::to($this->data['callback']);
+        }
         return $this->gateWay->send();
     }
 
     public function verify(){
+        if($this->data['price'] == 0){
+            return (object) [
+                'status' => 1,
+                'authority' => 999
+            ];
+        }
         return $this->gateWay->verify();
     }
 

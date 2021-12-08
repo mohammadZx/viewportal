@@ -2325,11 +2325,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "sendquestion",
   data: function data() {
     return {
       token: window.csrftoken,
+      gateway: false,
       userwallet: window.userwallet,
       options: {},
       selectedoptionId: 0,
@@ -3285,19 +3287,57 @@ var render = function () {
               ]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.gateway,
+                    expression: "gateway",
+                  },
+                ],
                 attrs: {
                   type: "checkbox",
                   name: "gateway",
-                  id: "wallet",
                   value: "wallet",
+                  id: "wallet",
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.gateway)
+                    ? _vm._i(_vm.gateway, "wallet") > -1
+                    : _vm.gateway,
+                },
+                on: {
+                  change: function ($event) {
+                    var $$a = _vm.gateway,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "wallet",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.gateway = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.gateway = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.gateway = $$c
+                    }
+                  },
                 },
               }),
             ])
-          : _c("div", [
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.gateway == false
+          ? _c("div", [
               _c("input", {
                 attrs: { type: "hidden", name: "gateway", value: "zarinpal" },
               }),
-            ]),
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _vm._m(0),
       ]

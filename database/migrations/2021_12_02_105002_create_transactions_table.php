@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('price')->nullable();
             $table->bigInteger('coupon_id')->nullable();
             $table->boolean('status')->default(0);
-            $table->string('autority_code')->nullable();
+            $table->string('authority_code')->nullable();
             $table->string('gate_way')->default('zarinpal');
             $table->text('comment')->nullable();
             $table->timestamps();
