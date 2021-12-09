@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Transaction;
 class TransactionController extends Controller
 {
     /**
@@ -14,7 +14,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        //
+        $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(PRE_PAGE);
+        return view('customer.transaction.index', [
+            'transactions' => $transactions
+        ]);
     }
 
     /**

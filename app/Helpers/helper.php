@@ -3,6 +3,7 @@ use Carbon\Carbon;
 use Hekmatinasser\Verta\Facades\Verta;
 
 define('PRE_PAGE', 20);
+define('IMAGECOUNT', 30);
 function arr_rand($arr){
     return $arr[array_rand($arr)];
 }

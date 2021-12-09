@@ -191,7 +191,7 @@ class DatabaseSeeder extends Seeder
                 $obj->option_var_id = arr_rand($this->varsId);
                 $obj->option_type_id = arr_rand($this->typesId);
                 $obj->price = rand(0, 1000);
-                $obj->coupon_id = rand(0, 3);
+                $obj->coupon = rand(0, 3);
                 $obj->authority_code = rand(1000000, 9999999 );
                 $obj->status = rand(0, 1);
                 $obj->save();

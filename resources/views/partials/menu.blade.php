@@ -12,8 +12,8 @@
     <div class="sidenav mt-2">
         <a href="{{ route('home') }}"><i class="fa fa-tachometer"></i> پنل کاربری</a>
         <a href="{{ route('user.send_question') }}"><i class="fa fa-comment"></i> ارسال سوال</a>
-        <a href="{{ route('transaction.index') }}"><i class="fas fa-money-bill-alt"></i> تراکنش ها</a>
-        <a href="{{ route('request.index') }}"><i class="fas fa-list"></i> سوالات</a>
+        <a href="{{ route('user.transactions') }}"><i class="fas fa-money-bill-alt"></i> تراکنش ها</a>
+        <a href="{{ route('user.requests') }}"><i class="fas fa-list"></i> سوالات</a>
         <a href="{{ route('user.wallet') }}"><i class="fas fa-wallet"></i> کیف پول</a>
         <button class="dropdown-btn"> اطلاعات حساب
             <i class="fa fa-caret-down"></i>

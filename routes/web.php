@@ -32,6 +32,9 @@ Route::prefix('/user')->name('user.')->group(function(){
     Route::post('/question/request/{id}', 'Question\QuestionRequestController@store')->name('question_request');
     /**  ----------- END ------------- **/
 
+    Route::get('/transactions', 'Transaction\TransactionController@index')->name('transactions');
+    Route::get('/requests', 'Request\RequestController@index')->name('requests');
+    Route::get('/request/{id}', 'Request\RequestController@show')->name('request');
 
     /** -------------- WALLET ---------------  **/
     Route::get('wallet','Wallet\UserWalletController@index')->name('wallet');

@@ -71,7 +71,7 @@ class QuestionController extends Controller
             $transaction->option_var_id = $req['var'];
             $transaction->option_type_id = $req['type'];
             $transaction->price = $req['price'];
-            $transaction->coupon_id = $coupon ? $coupon->id : null;
+            $transaction->coupon = $coupon ? $req['coupon'] : null;
             $transaction->status = 1;
             $transaction->authority_code = $verify->authority;
             $transaction->gate_way = $req['gateway'];

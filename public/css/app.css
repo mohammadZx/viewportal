@@ -11061,6 +11061,14 @@ li {
   font-size: 12px;
 }
 
+.images img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 1px solid #ccc;
+}
+
 @font-face {
   font-family: IranSans;
   src: url("/font/IRANSansWeb.woff2") format("woff2"), url("/font/IRANSansWeb.woff") format("woff"), url("/font/IRANSansWeb.ttf") format("truetype");

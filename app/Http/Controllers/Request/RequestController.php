@@ -14,7 +14,7 @@ class RequestController extends Controller
      */
     public function index()
     {
-        //
+        dd('dfd');
     }
 
     /**
@@ -46,7 +46,7 @@ class RequestController extends Controller
      */
     public function show($id)
     {
-        //
+        dd($id);
     }
 
     /**

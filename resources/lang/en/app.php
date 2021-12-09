@@ -1,5 +1,7 @@
 <?php
 
 return [
-    'dashboard' => 'داشبورد'
+    'dashboard' => 'داشبورد',
+    'create' => 'اضافه',
+    'update' => 'بروز'
 ];

@@ -20,7 +20,7 @@ class CreateTransactionsTable extends Migration
             $table->bigInteger('option_var_id')->nullable();
             $table->bigInteger('option_type_id')->nullable();
             $table->bigInteger('price')->nullable();
-            $table->bigInteger('coupon_id')->nullable();
+            $table->string('coupon')->nullable();
             $table->boolean('status')->default(0);
             $table->string('authority_code')->nullable();
             $table->string('gate_way')->default('zarinpal');
