@@ -13,6 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js([
         'resources/js/app.js',
+        'resources/js/wheelzoom.js',
         'resources/js/viewer-init.js',
     ], 'public/js')
     .js('resources/js/sendquestion.js', 'public/js')

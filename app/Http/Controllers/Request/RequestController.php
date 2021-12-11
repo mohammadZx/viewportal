@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Request;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Request as Req;
 class RequestController extends Controller
 {
     /**
@@ -14,7 +14,12 @@ class RequestController extends Controller
      */
     public function index()
     {
-        dd('dfd');
+        $requests = Req::whereHas('transaction', function($q){
+            $q->where('user_id', auth()->user()->id);
+        })->orderBy('id','desc')->paginate(PRE_PAGE);
+        return view('customer.request.index', [
+            'requests' => $requests
+        ]);
     }
 
     /**
@@ -46,7 +51,11 @@ class RequestController extends Controller
      */
     public function show($id)
     {
-        dd($id);
+        $req = Req::findOrFail($id);
+        $this->authorize('view', [$req]);
+        return view('customer.request.show', [
+            'request' => $req
+        ]);
     }
 
     /**

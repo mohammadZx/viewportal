@@ -11069,6 +11069,41 @@ li {
   border: 1px solid #ccc;
 }
 
+button.btn.btn-viewer {
+  position: absolute;
+  background: #ffffffa6;
+  border-radius: 0;
+  padding: 1px 4px;
+}
+
+.display-comment {
+  padding-right: 15px;
+  margin-top: 15px;
+}
+
+.attachment.comment {
+  margin-top: 20px;
+}
+
+.v-image {
+  overflow: hidden;
+}
+
+.v-tools .tool {
+  padding: 3px;
+}
+
+.v-tools .tool img {
+  width: 30px;
+}
+
+#vimage {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  transition: 0.5s all;
+}
+
 @font-face {
   font-family: IranSans;
   src: url("/font/IRANSansWeb.woff2") format("woff2"), url("/font/IRANSansWeb.woff") format("woff"), url("/font/IRANSansWeb.ttf") format("truetype");

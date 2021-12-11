@@ -11,7 +11,8 @@ function toJalali($date, $delimeter = '-', $concater = '-'){
     $de = explode(' ', Carbon::parse($date)->format('Y-m-d h:i:s'));
     $getData = explode($delimeter, $de[0]);
     $Ndate = Verta::getJalali($getData[0], $getData[1], $getData[2]);
-    return implode($concater, $Ndate)  .' ' . isset($de[1]) ? $de[1] : null;
+    $h = isset($de[1]) ? $de[1] : null;
+    return implode($concater, $Ndate)  .' ' . $h;
 }
 
 function toGregorian($date, $delimeter = '-', $concater = '-'){

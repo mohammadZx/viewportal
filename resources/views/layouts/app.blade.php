@@ -103,6 +103,7 @@
         </main>
     </div>
      
+    @include('partials.popupviewer')
 
 </body>
 </html>

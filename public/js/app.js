@@ -37758,9 +37758,270 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
   !*** ./resources/js/viewer-init.js ***!
   \*************************************/
 /*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var WZoom = __webpack_require__(/*! ./wheelzoom */ "./resources/js/wheelzoom.js");
+
+$('.btn-viewer').click(function () {
+  $('#vimage').attr('src', $(this).attr('data-src'));
+  viewerTools.reset();
+  viewerTools["do"]();
+});
+viewerTools = {
+  filters: {
+    invert: 0,
+    contrast: 1,
+    brightness: 1
+  },
+  transforms: {
+    rotate: 0,
+    rotateY: 0,
+    rotateX: 0,
+    scale: 1
+  },
+  zoomDef: function zoomDef() {
+    this.transforms.scale = 1;
+  },
+  zoomIn: function zoomIn() {
+    this.transforms.scale += .2;
+  },
+  zoomOut: function zoomOut() {
+    this.transforms.scale -= .2;
+  },
+  rotateRight: function rotateRight() {
+    this.transforms.rotate += 90;
+  },
+  rotateleft: function rotateleft() {
+    this.transforms.rotate -= 90;
+  },
+  flipH: function flipH() {
+    this.transforms.rotateY += 180;
+  },
+  flipV: function flipV() {
+    this.transforms.rotateX += 180;
+  },
+  invert: function invert() {
+    this.filters.invert = this.filters.invert == 1 ? 0 : 1;
+  },
+  reset: function reset() {
+    this.filters.invert = 0;
+    this.filters.contrast = 1;
+    this.filters.brightness = 1;
+    this.transforms.rotateX = 0;
+    this.transforms.rotateY = 0;
+    this.transforms.rotate = 0;
+    this.transforms.scale = 1;
+    $('#vimage').css('top', 0);
+    $('#vimage').css('left', 0);
+  },
+  print: function print() {
+    $('#viewer .v-image').css('position', 'fixed');
+    $('#viewer .v-image').css('top', '0');
+    $('#viewer .v-image').css('left', '0');
+    $('#viewer .v-image').css('width', '100%');
+    $('#viewer .v-image').css('height', '100%');
+    $('#viewer .v-image').css('background', '#fff');
+    window.print();
+    $('#viewer .v-image').css('position', 'unset');
+    $('#viewer .v-image').css('top', '0');
+    $('#viewer .v-image').css('left', '0');
+    $('#viewer .v-image').css('width', 'unset');
+    $('#viewer .v-image').css('height', 'unset');
+    $('#viewer .v-image').css('background', 'none');
+  },
+  contrast: function contrast(el) {
+    this.filters.contrast = el.val() / 100;
+  },
+  brightness: function brightness(el) {
+    this.filters.brightness = el.val() / 100;
+  },
+  "do": function _do() {
+    var filters = "";
+    var transforms = "";
+    Object.entries(viewerTools.filters).forEach(function (_ref) {
+      var _ref2 = _slicedToArray(_ref, 2),
+          key = _ref2[0],
+          val = _ref2[1];
+
+      filters += " ".concat(key, "(").concat(val, ")");
+    });
+    $('#vimage').css('filter', filters);
+    Object.entries(viewerTools.transforms).forEach(function (_ref3) {
+      var _ref4 = _slicedToArray(_ref3, 2),
+          key = _ref4[0],
+          val = _ref4[1];
+
+      transforms += " ".concat(key, "(").concat(val).concat(key != 'scale' ? 'deg' : '', ")");
+    });
+    $('#vimage').css('transform', transforms);
+  }
+};
+$('.v-tools .tool:not(input)').click(function () {
+  viewerTools[$(this).attr('data-function')]();
+  viewerTools["do"]();
+});
+$('.v-tools input.tool').on('change', function () {
+  viewerTools[$(this).attr('data-function')]($(this));
+  viewerTools["do"]();
+});
+$(function () {
+  $('#vimage').dragZoom({
+    scope: $("body"),
+    zoom: 1,
+    onWheelStart: function onWheelStart() {}
+  }, function () {});
+});
+
+/***/ }),
+
+/***/ "./resources/js/wheelzoom.js":
+/*!***********************************!*\
+  !*** ./resources/js/wheelzoom.js ***!
+  \***********************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
+//jQuery拖拽缩放组件  create by dongp
+//version 1.0
+;
 
+(function (jQuery, window, document, undfined) {
+  ///拖拽，缩放    dongp
+  var DragZoom = function DragZoom(ele, opt) {
+    this.$element = ele;
+    this.defaults = {
+      minzoom: 1,
+      maxzoom: 5,
+      zoom: 1,
+      speed: 0.7,
+      scope: null,
+      onWheelStart: null,
+      onWheelEnd: null,
+      onDragStart: null,
+      onDragMove: null,
+      onDragEnd: null
+    };
+    this.options = $.extend({}, this.defaults, opt);
+  };
+
+  DragZoom.prototype = {
+    Init: function Init() {
+      var self = this; //参数
+
+      self.x = this.$element.offset().left;
+      self.y = this.$element.offset().top;
+      self.width = this.$element.width();
+      self.height = this.$element.height();
+      self.scale = 1;
+      self.relX = 0;
+      self.relY = 0;
+      self.isMoved = false; //缩放
+
+      self.$element.on('mouseout', function (e) {
+        $("body").css('cursor', 'default');
+        return false;
+      }).on('mousewheel', function (e, delta) {
+        var size = delta * self.options.speed;
+        self.options.zoom = (self.options.zoom * 10 + delta) / 10;
+        self.wheel(e, self);
+        return false;
+      }).on('mousedown', function (e) {
+        $("body").css("cursor", "move");
+        self.start(e, self);
+        return false;
+      }).on('mouseup', function (e) {
+        $("body").css('cursor', 'default');
+      }); //拖拽
+
+      $(document).on('mousemove', function (e) {
+        // if (self.options.zoom > 1) {
+        //     self.move(e, self);
+        // }
+        self.move(e, self);
+        return false;
+      }).on('mouseup', function (e) {
+        self.end(e, self);
+        return false;
+      });
+      return self.$element;
+    },
+    wheel: function wheel(ev, self) {
+      if (self.options.zoom >= self.options.minzoom && self.options.zoom <= self.options.maxzoom) {
+        //缩放开始回调
+        self.options.onWheelStart && typeof self.options.onWheelStart == 'function' ? self.options.onWheelStart() : null;
+        var cursor_x = ev.pageX,
+            cursor_y = ev.pageY;
+        var eleOffset = self.$element.offset();
+        self.x = eleOffset.left;
+        self.y = eleOffset.top;
+        self.x = self.x - (cursor_x - self.x) * (self.options.zoom - self.scale) / self.scale;
+        self.y = self.y - (cursor_y - self.y) * (self.options.zoom - self.scale) / self.scale;
+        self.scale = self.options.zoom;
+        self.$element.width(self.width * self.scale).height(self.height * self.scale);
+        self.$element.offset({
+          top: self.y,
+          left: self.x
+        }); //缩放结束回调
+
+        self.options.onWheelEnd && typeof self.options.onWheelEnd == 'function' ? self.options.onWheelEnd() : null;
+      }
+
+      self.options.zoom = self.options.zoom < self.options.minzoom ? self.options.minzoom : self.options.zoom > self.options.maxzoom ? self.options.maxzoom : self.options.zoom;
+    },
+    start: function start(ev, self) {
+      self.isMoved = true;
+      var selfOffset = self.$element.offset();
+      self.relX = ev.clientX - selfOffset.left;
+      self.relY = ev.clientY - selfOffset.top; //拖拽开始回调
+
+      self.options.onDragStart ? self.options.onDragStart() : null;
+    },
+    move: function move(ev, self) {
+      if (self.isMoved) {
+        self.y = ev.clientY - self.relY;
+        self.x = ev.clientX - self.relX;
+        self.$element.offset({
+          top: self.y,
+          left: self.x
+        }); // self.$element.animate({ top: self.y + 'px', left: self.x + 'px' });
+        //拖拽移动回调
+
+        self.options.onDragMove && typeof self.options.onDragMove == 'function' ? self.options.onDragMove() : null;
+      }
+    },
+    end: function end(ev, self) {
+      self.isMoved = false; // $(document).off('mousemove').off('mouseup');
+      //拖拽结束回调
+
+      self.options.onDragEnd && typeof self.options.onDragEnd == 'function' ? self.options.onDragEnd() : null;
+    }
+  };
+  var dragzoom;
+
+  jQuery.fn.dragZoom = function (options) {
+    dragzoom = new DragZoom(this, options);
+    return dragzoom.Init();
+  };
+
+  jQuery.fn.dragZoomClear = function () {
+    if (dragzoom) {
+      dragzoom.options.zoom = 1;
+      dragzoom.scale = 1;
+    }
+  };
+})($, window, document, undefined);
 
 /***/ }),
 
@@ -37776,13 +38037,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ }),
 
 /***/ 0:
-/*!*******************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/viewer-init.js ./resources/sass/app.scss ***!
-  \*******************************************************************************************/
+/*!***********************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/wheelzoom.js ./resources/js/viewer-init.js ./resources/sass/app.scss ***!
+  \***********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\view\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\view\resources\js\wheelzoom.js */"./resources/js/wheelzoom.js");
 __webpack_require__(/*! C:\xampp\htdocs\view\resources\js\viewer-init.js */"./resources/js/viewer-init.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\view\resources\sass\app.scss */"./resources/sass/app.scss");
 

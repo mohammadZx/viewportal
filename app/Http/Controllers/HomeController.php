@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         $allTransactions = auth()->user()->transactions()->count();
         $faildTransactions = auth()->user()->transactions()->where('status',0)->count();
-        $requests = Req::whereHas('transactions' , function($q){
+        $requests = Req::whereHas('transaction' , function($q){
             $q->where('user_id', auth()->user()->id);
         })->count();
         return view('home', [
