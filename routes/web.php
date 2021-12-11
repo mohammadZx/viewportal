@@ -38,7 +38,7 @@ Route::prefix('/user')->name('user.')->group(function(){
 
     /** -------------- WALLET ---------------  **/
     Route::get('wallet','Wallet\UserWalletController@index')->name('wallet');
-    Route::get('wallet/charge','Wallet\UserWalletController@charge')->name('charge');
+    Route::post('wallet/charge','Wallet\UserWalletController@charge')->name('charge');
     Route::get('wallet/verify','Wallet\UserWalletController@verify')->name('verify');
 
 
