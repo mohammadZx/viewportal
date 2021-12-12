@@ -11,9 +11,13 @@
             <label for="type" class="col-md-4 col-form-label text-md-right">عنوان</label>
 
             <div class="col-md-6">
-                <select value="{{ old('type') ? old('type') : ($user->can('expert') ? 'expert' : 'customer')  }}" name="type"  id="typeuserselect" class="form-control">
-                    <option value="customer" @if((old('type') ? old('type') : ($user->can('expert') ? 'expert' : 'customer')) == 'customer') selected @endif>کاربر</option>
-                    <option value="expert" @if((old('type') ? old('type') : ($user->can('expert') ? 'expert' : 'customer')) == 'expert') selected @endif>کارشناس</option>
+                <select value="{{ old('type') ? old('type') :$user->role }}" name="type"  id="typeuserselect" class="form-control">
+                    <option value="customer">کاربر</option>
+                    <option value="expert_one">کارشناس</option>
+                @if($userid)
+                    <option value="admin">ادمین</option>
+                    <option value="expert_two">کارشناس دوم</option>
+                @endif
                 </select>
 
                 @error('type')
@@ -25,12 +29,6 @@
         </div>
         @if($userid)
         <div class="form-group row">
-            <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="admin_access">دسترسی ادمین</label>
-                        <input type="checkbox" @if($user->role == 'admin') checked @endif name="admin_access" id="admin_access">
-                    </div>
-            </div>
             <div class="col-md-6">
                     <div class="form-group">
                         <label for="active">فعال</label>
@@ -147,4 +145,6 @@
     </form>
 </div>
 </div>
+
+
 @endsection

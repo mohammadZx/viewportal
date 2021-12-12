@@ -15,6 +15,7 @@
                         <tr>
                             <th class="p-2">دسته</th>
                             <td class="p-2">{{$req->transaction->optionVar->option->name}} <br> {{$req->transaction->optionVar->name}}</td>
+                            <td class="p-2">{{$req->transaction->optionType->name}}</td>
                         </tr>
                         <tr>
                             <th class="p-2">عنوان</th>
@@ -44,6 +45,10 @@
                             <th class="p-2">سن</th>
                             <td class="p-2">{{$req->getMeta('age', true)}}</td>
                         </tr>
+                        <tr>
+                            <th class="p-2">تاریخ</th>
+                            <td class="p-2">{{$req->created_at}}</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="table-responsive col-md-3">
@@ -51,6 +56,9 @@
                         <tr>
                             <th class="p-2">
                             <a href="{{route('user.request', $req->id)}}" class="btn btn-primary">مشاهده </a>
+                            @if(auth()->user()->can('update', $req) || auth()->user()->can('admin'))
+                            <a href="{{route('user.question_request', $req->transaction->id)}}" class="btn btn-warning">ویرایش </a>
+                            @endif
                             <br>
                                 وضعیت: <a href="#" class="text-danger">{{__('app.'.$req->status)}}</a>
                             </th>

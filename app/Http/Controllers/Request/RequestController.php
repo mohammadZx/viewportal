@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Request as Req;
+use Illuminate\Pipeline\Pipeline;
 class RequestController extends Controller
 {
     /**
@@ -14,13 +15,29 @@ class RequestController extends Controller
      */
     public function index()
     {
-        $requests = Req::whereHas('transaction', function($q){
-            $q->where('user_id', auth()->user()->id);
-        })->orderBy('id','desc')->paginate(PRE_PAGE);
+        
+  
+        $pipelines = app(Pipeline::class)
+        ->send(Req::query())
+        ->through([
+            new \App\Policies\AdminPolicy(),
+            new \App\Policies\ExpertPolicy(),
+            new \App\Policies\CustomerPolicy(),
+        ])
+        ->thenReturn();
+        $requests = $pipelines->select('requests.*')
+        ->leftJoin('transactions', function($q){
+            $q->on('transactions.id', 'requests.transaction_id');
+        })
+        ->leftJoin('option_types', function($q){
+            $q->on('transactions.option_type_id', 'option_types.id');
+        })
+        ->orderBy('option_types.order_no','ASC')->paginate(PRE_PAGE);
         return view('customer.request.index', [
             'requests' => $requests
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

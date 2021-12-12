@@ -27,6 +27,12 @@
             <input type="submit" value="شارژ کیف پول" class="btn btn-primary">
         </div>
     </form>
+    <form method="post" action="{{route('user.liquidation')}}" class="wallet-manage">
+        @csrf
+        <div class="form-group">
+            <input type="submit" value="درخواست تسویه" class="btn btn-primary">
+        </div>
+    </form>
     <ul class="list-group mt-3">
         @foreach($transactions as $tr)
         <li class="list-group-item">

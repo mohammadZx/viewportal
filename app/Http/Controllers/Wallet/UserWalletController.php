@@ -58,7 +58,7 @@ class UserWalletController extends Controller
             $this->set($req['price']);
             return redirect()->route('user.wallet')->with('message' , [
                 'type' => 'success',
-                'message' => 'کیف پول شما با موفیت شارژ شد'
+                'message' => 'کیف پول شما با موفقیت شارژ شد'
             ]);
         }
         return redirect()->route('user.wallet')->with('message' , [
@@ -68,8 +68,32 @@ class UserWalletController extends Controller
     }
     public function set($price, $user = null){
         $user = $user ? $user : auth()->user();
-        $user->wallet = $price;
+        $user->wallet += $price;
         $user->save();
         return;
+    }
+    public function liquidation(Request $request){
+
+        if(auth()->user()->wallet <= 10000)  return redirect()->route('user.wallet')->with('message' , [
+            'type' => 'warning',
+            'message' => 'مبلغ موجود در کیف پول شما کمتر از 10 هزار تومان برای برداشت می باشد.'
+        ]);
+
+        auth()->user()->transactions()->create([
+            'name' => 'WALLET',
+            'price' => auth()->user()->wallet,
+            'status' => 0,
+            'gate_way' => 'wallet'
+        ]);
+        
+        $user = auth()->user();
+        $user->wallet = 0;
+        $user->save();
+
+        return redirect()->route('user.wallet')->with('message' , [
+            'type' => 'success',
+            'message' => 'درخواست شما با موفقیت انجام شد. و در اولین فرصت مبلغ مورد نظر به حساب شما واریز خواهد شد.'
+        ]);
+
     }
 }

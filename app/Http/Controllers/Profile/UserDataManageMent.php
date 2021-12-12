@@ -40,8 +40,8 @@ class UserDataManageMent extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id),],
             'phone' => ['required', 'size:11', Rule::unique('users')->ignore($user->id),],
         ];
-        
-        if(isset($data['type']) && $data['type'] == 'expert'){
+
+        if(isset($req->type) && substr($req->type, 0,6) == 'expert'){
             $validator['type'] = ['required'];
             $validator['shaba'] = ['required', 'max:255', 'min:22', 'max:26'];
             $validator['cartmeli'] = ['file','max:300'];
@@ -52,13 +52,14 @@ class UserDataManageMent extends Controller
      
         $validation = Validator::make($req->all(), $validator);
         $validation->validate();
-
+       
         $user->name = $req->name;
         $user->phone = $req->phone;
         $user->email = $req->email;
-        $user->role = 'customer';
-        if($req->type == 'customer') $user->role = 'expert_one';    
-        if($userid && $req->admin_access) $user->role = 'admin';
+        if($req->type == 'customer' || $req->type == 'expert_one'){
+            $user->role = $req->type;
+        }
+        if($userid) $user->role = $req->type;
         $user->save();
 
         $user->setMeta('shaba', $req->shaba,  0 , true);

@@ -18,7 +18,7 @@ class CustomerRequestPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        return true;
     }
 
     /**
@@ -30,6 +30,8 @@ class CustomerRequestPolicy
      */
     public function view(User $user, Request $request)
     {
+        if($user->can('admin') || $user->can('superadmin')) return true;
+        if($user->can('expert') && $request->status != 'comment') return true;
         return $user->id == $request->transaction->user_id;
     }
 
@@ -53,7 +55,8 @@ class CustomerRequestPolicy
      */
     public function update(User $user, Request $request)
     {
-        //
+        if($user->can('admin') || $user->can('superadmin')) return true;
+        return $user->id == $request->transaction->user_id;
     }
 
     /**

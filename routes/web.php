@@ -40,6 +40,7 @@ Route::prefix('/user')->name('user.')->group(function(){
     Route::get('wallet','Wallet\UserWalletController@index')->name('wallet');
     Route::post('wallet/charge','Wallet\UserWalletController@charge')->name('charge');
     Route::get('wallet/verify','Wallet\UserWalletController@verify')->name('verify');
+    Route::post('wallet/liquidation','Wallet\UserWalletController@liquidation')->name('liquidation');
 
 
 
@@ -59,7 +60,7 @@ Route::prefix('/user')->name('user.')->group(function(){
 
 Route::resource('user','User\UserController')->middleware('can:admin,superadmin');
 Route::post('/user/clear-wallet/{id}', 'User\UserController@clearingWallet')->middleware('can:admin,superadmin')->name('user.clear-wallet');
-Route::resource('request','Request\RequestController')->middleware('can:admin,superadmin,expert');
+Route::resource('request','Request\RequestController');
 Route::resource('transaction','Transaction\TransactionController')->middleware('can:admin,superadmin');
 Route::resource('comment','Comment\CommentController')->middleware('can:admin,superadmin,expert');
 Route::resource('coupon','Coupon\CouponController')->middleware('can:admin,superadmin');

@@ -10,13 +10,13 @@ $('.file').on('change', function() {
         $(this).parent().children('img').attr('src', URL.createObjectURL(file))
     }
 })
-
-if ($('#typeuserselect').val() == 'expert') {
+$('#typeuserselect option[value=' + ($('#typeuserselect').attr('value') || 'customer') + ']').attr('selected', true);
+if ($('#typeuserselect').val().substring(0, 6) == 'expert') {
     $('#expert').css('display', 'block');
     $('#expert:not(.edit) input').attr('required', 'true')
 }
 $('#typeuserselect').on('change', function() {
-    if ($(this).val() == 'expert') {
+    if ($(this).val().substring(0, 6) == 'expert') {
         $('#expert').css('display', 'block');
         $('#expert:not(.edit) input').attr('required', 'true')
         return;

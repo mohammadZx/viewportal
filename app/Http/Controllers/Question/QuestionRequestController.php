@@ -60,7 +60,7 @@ class QuestionRequestController extends Controller
         $status = "create";
         if($req->has('req_id')){
             $request = Req::findOrFail($req->req_id);
-            $request->status = "updated";
+            $request->status = $request->status;
             $status = "update";
             $request->meta()->where('meta_key', 'attachment')->delete();
         }
