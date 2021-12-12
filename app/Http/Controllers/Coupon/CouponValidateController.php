@@ -73,8 +73,8 @@ class CouponValidateController extends Controller
         if($this->coupon->role != null && json_decode($this->coupon->role, true)){
             $roles = json_decode($this->coupon->role, true);
             $exsitRoleStatus = false;
-            foreach($roles['options'] as $role){
-                if($role == $this->data->selectedoptionId) $exsitRoleStatus = true;
+            foreach($roles['options'] as $role){ 
+                if($role == $this->data->selectedOption) $exsitRoleStatus = true;
             }
             if(!$exsitRoleStatus) $this->messages[] = 'کوپون برای این دسته به کار نمی رود';
         }

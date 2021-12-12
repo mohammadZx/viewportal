@@ -14,7 +14,10 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transactions = Transaction::where('user_id', auth()->user()->id)->orderBy('id', 'DESC')->paginate(PRE_PAGE);
+        $transactions = Transaction::where('user_id', auth()->user()->id)->where('name','CASE')->orderBy('id', 'DESC')->paginate(PRE_PAGE);
+        if(request()->is('transaction') && (auth()->user()->can('admin') || auth()->user()->can('superadmin'))){
+            $transactions = Transaction::where('name','CASE')->orderBy('id', 'DESC')->paginate(PRE_PAGE);
+        }
         return view('customer.transaction.index', [
             'transactions' => $transactions
         ]);
@@ -83,6 +86,14 @@ class TransactionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tr = Transaction::findOrFail($id);
+        $tr->request ? $tr->request->comments()->delete() : null;
+        $tr->request()->delete();
+        $tr->delete();
+        return redirect()->back()->with('message', [
+            'type' => 'success',
+            'message' => "تراکنش با موفیت حذف شد"
+        ]);
+
     }
 }

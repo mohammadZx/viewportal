@@ -64,11 +64,13 @@ Route::resource('request','Request\RequestController');
 Route::resource('transaction','Transaction\TransactionController')->middleware('can:admin,superadmin');
 Route::resource('comment','Comment\CommentController')->middleware('can:admin,superadmin,expert');
 Route::resource('coupon','Coupon\CouponController')->middleware('can:admin,superadmin');
-Route::resource('attachment','Attachment\Attachment')->middleware('can:admin,superadmin');
+Route::resource('option','Option\OptionController')->middleware('can:admin,superadmin');
+Route::resource('option-var','Coupon\OptionVarController')->middleware('can:admin,superadmin');
+Route::resource('option-type','Coupon\OptionTypeController')->middleware('can:admin,superadmin');
 Route::get('comment/reject', 'Comment\CommentController@reject')->name('comment.reject');
 
 Route::get('/wallet/order','User\UserWalletController@index')->name('wallet_order')->middleware('can:admin,superadmin');
-Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wallet_order_status')->middleware('can:admin,superadmin');
+Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wallet_order')->middleware('can:admin,superadmin');
 
 
 

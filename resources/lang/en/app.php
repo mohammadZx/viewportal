@@ -9,5 +9,7 @@ return [
     'mark' => 'مشاهده شده',
     'comment' => 'پاسخ داده شده',
     'WALLET' => 'کیف پول',
-    'WALLET_CHARGE' => 'شارژ کیف پول'
+    'WALLET_CHARGE' => 'شارژ کیف پول',
+    'percent' => 'درصدی',
+    'static' => 'ثابت'
 ];
