@@ -15,7 +15,8 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('transaction_id');
+            $table->unsignedBigInteger('transaction_id');
+            $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->text('title');
             $table->text('content')->nullable();
             $table->string('status');

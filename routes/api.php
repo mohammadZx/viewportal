@@ -21,4 +21,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('/v1')->group(function(){
     Route::get('/get-options', 'Question\QuestionController@getOptions');
     Route::post('/question/setdiscount', 'Question\QuestionController@setCoupon');
+
+
+
+    Route::get('/option/{id}/types', 'Option\OptionTypeController@index');
+    Route::get('/option/{id}/vars', 'Option\OptionVarController@index');
+
+
+    Route::delete('/types/{id}', 'Option\OptionTypeController@destrory');
+    Route::delete('/vars/{id}', 'Option\OptionVarController@destrory');
+
+    Route::post('/types', 'Option\OptionTypeController@store');
+    Route::post('/vars', 'Option\OptionVarController@store');
 });

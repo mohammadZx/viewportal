@@ -11,5 +11,7 @@ class OptionVar extends Model
     public function option(){
         return $this->belongsTo('\App\Option', 'option_id');
     }
-
+    public function transactions(){
+        return $this->hasMany('\App\Transaction', 'option_var_id');
+    }
 }

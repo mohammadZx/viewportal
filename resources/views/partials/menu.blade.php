@@ -45,6 +45,8 @@
         <a href="{{ route('transaction.index') }}"><i class="fas fa-money-bill-alt"></i> تراکنش ها</a>
         <a href="{{ route('wallet_order') }}"><i class="fas fa-money-bill-alt"></i> درخواست پول</a>
         <a href="{{ route('coupon.index') }}"><i class="fas fa-money-bill-alt"></i> کد های تخفیف</a>
+        <a href="{{ route('option.index') }}"><i class="fas fa-cog"></i> دسته ها</a>
+        
         @endif
     </div>
 

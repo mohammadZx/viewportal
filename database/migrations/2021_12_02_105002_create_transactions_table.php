@@ -16,9 +16,12 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->bigInteger('user_id');
-            $table->bigInteger('option_var_id')->nullable();
-            $table->bigInteger('option_type_id')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('option_var_id')->nullable();
+            $table->unsignedBigInteger('option_type_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('option_var_id')->references('id')->on('options')->onDelete('cascade');
+            $table->foreign('option_type_id')->references('id')->on('options')->onDelete('cascade');
             $table->bigInteger('price')->nullable();
             $table->string('coupon')->nullable();
             $table->boolean('status')->default(0);

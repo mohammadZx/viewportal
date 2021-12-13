@@ -15,7 +15,8 @@ class CreateOptionTypesTable extends Migration
     {
         Schema::create('option_types', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('option_id');
+            $table->unsignedBigInteger('option_id');
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table->string('name');
             $table->text('content')->nullable();
             $table->integer('order_no')->nullable()->default(1);

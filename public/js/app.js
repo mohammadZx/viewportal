@@ -37660,7 +37660,7 @@ $('.file').on('change', function () {
 });
 $('#typeuserselect option[value=' + ($('#typeuserselect').attr('value') || 'customer') + ']').attr('selected', true);
 
-if ($('#typeuserselect').val().substring(0, 6) == 'expert') {
+if ($('#typeuserselect').val() && $('#typeuserselect').val().substring(0, 6) == 'expert') {
   $('#expert').css('display', 'block');
   $('#expert:not(.edit) input').attr('required', 'true');
 }

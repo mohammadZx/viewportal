@@ -17,4 +17,5 @@ mix.js([
         'resources/js/viewer-init.js',
     ], 'public/js')
     .js('resources/js/sendquestion.js', 'public/js')
+    .js('resources/js/adminoption.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

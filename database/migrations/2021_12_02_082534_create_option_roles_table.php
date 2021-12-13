@@ -15,7 +15,8 @@ class CreateOptionRolesTable extends Migration
     {
         Schema::create('option_roles', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('option_id');
+            $table->unsignedBigInteger('option_id');
+            $table->foreign('option_id')->references('id')->on('options')->onDelete('cascade');
             $table->string('role_key');
             $table->text('role_value')->nullable();
             $table->timestamps();
