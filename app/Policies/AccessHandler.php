@@ -9,11 +9,10 @@ abstract class AccessHandler{
 
         $builder = $next($request);
 
-        if(!auth()->user()->can($this->filterName())){
-           return $builder;  
+        if(auth()->user()->can($this->filterName())){
+            $builder =  $this->applyFilter($builder);   
         }
-        
-        return $this->applyFilter($builder);   
+        return $builder;
     }
 
     abstract public function filterName();

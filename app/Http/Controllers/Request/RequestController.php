@@ -21,7 +21,8 @@ class RequestController extends Controller
         ->send(Req::query())
         ->through([
             new \App\Policies\AdminPolicy(),
-            new \App\Policies\ExpertPolicy(),
+            new \App\Policies\ExpertOnePolicy(),
+            new \App\Policies\ExpertTwoPolicy(),
             new \App\Policies\CustomerPolicy(),
         ])
         ->thenReturn();

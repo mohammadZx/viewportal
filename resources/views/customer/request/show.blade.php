@@ -38,10 +38,18 @@
  <hr>
  <div class="row attachment images">
      @foreach($request->getMeta('attachment') as $image)
-     <div class="col-md-3">
-         <button data-src="{{getAttachmentById($image->meta_value)}}" class="btn btn-viewer" type="button" data-toggle="modal" data-target=".popupviewer"><i class="fa fa-eye"></i></button>
-         <img src="{{getAttachmentById($image->meta_value)}}" alt="">
-        </div>
+     @php $attachmentById = getAttachmentById($image->meta_value); @endphp
+     @if(istype($attachmentById, 'image'))
+            <div class="col-md-3">
+            <button class="btn btn-viewer" data-src="{{$attachmentById}}" type="button" data-toggle="modal" data-target=".popupviewer"><i class="fa fa-eye"></i></button>
+            <img src="{{$attachmentById}}" alt="">
+            </div>
+        @endif
+        @if(istype($attachmentById, 'audio'))
+            <div class="col-md-6">
+            <audio src="{{$attachmentById}}" controls preload="none"></audio>
+            </div>
+        @endif
      @endforeach
  </div>
  <hr>
@@ -56,6 +64,10 @@
      <div class="title">
          پاسخ ها:
      </div>
+        @can('addcomment', $request)
+            @include('partials.commentform', ['request' => $request])
+        @endcan
+
      @include('partials.comments', ['comments' => $request->comments])
  </div>
 </div>

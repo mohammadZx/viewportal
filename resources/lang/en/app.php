@@ -11,5 +11,6 @@ return [
     'WALLET' => 'کیف پول',
     'WALLET_CHARGE' => 'شارژ کیف پول',
     'percent' => 'درصدی',
-    'static' => 'ثابت'
+    'static' => 'ثابت',
+    'reference' => 'ارجاع'
 ];

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Comment;
 
+use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Request as Req;
 class CommentController extends Controller
 {
     /**
@@ -14,7 +15,8 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $commets = Comment::orderBy('id','DESC')->paginate(PRE_PAGE);
+        return view('customer.comment.index', ['comments'=>$commets]);
     }
 
     /**
@@ -81,5 +83,28 @@ class CommentController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+
+    public function reference(){
+    
+        $requests = Req::select('requests.*')
+        ->leftJoin('transactions', function($q){
+            $q->on('transactions.id', 'requests.transaction_id');
+        })
+        ->leftJoin('option_types', function($q){
+            $q->on('transactions.option_type_id', 'option_types.id');
+        })
+        ->where('requests.status', 'reference')->orderBy('option_types.order_no','ASC')->paginate(PRE_PAGE);
+        return view('customer.request.index', [
+            'requests' => $requests
+        ]);
+    }
+    public function disapproveforrequest($id){
+
+    }
+
+    public function approveforrequest($id){
+
     }
 }

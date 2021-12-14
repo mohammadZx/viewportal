@@ -4,6 +4,11 @@ use Hekmatinasser\Verta\Facades\Verta;
 
 define('PRE_PAGE', 20);
 define('IMAGECOUNT', 30);
+$GLOBALS['extensions'] = [
+    'image' => ['apng', 'png', 'jpg', 'jpeg', 'webp', 'svg', 'avif', 'gif','ico','tiff','bmp'],
+    'audio' => ['3gp','mp3','m4a','aa','aac','aax', 'act','aiff','alac', 'amr','ape','au','awb','dss','dvf','flac','gsm','iklax','lvs','m4a','m4p','mmf','mp3','mpc','msv','nmf','ogg','oga','mogg','apus','ra','rm','raw','rf64','sln','tta','vox','voc','wma','wm','webm','8svx','cda'],
+    'movie' => []
+];
 function arr_rand($arr){
     return $arr[array_rand($arr)];
 }
@@ -36,3 +41,9 @@ function getUserTumbnail(){
     }
     echo "<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTri7KMd1dVXK-iVV6g6nH1A_HFMyL5vKtLjY8y_nuNYeLr5EMM5QA0eOj6zkEJhI8qtpk&usqp=CAU' class='user-thumbnail'>";
 }
+
+function istype($path, $type = 'image'){
+
+    return in_array(strtolower(pathinfo($path,PATHINFO_EXTENSION)), $GLOBALS['extensions'][$type]);
+}
+

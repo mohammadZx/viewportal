@@ -62,12 +62,15 @@ Route::resource('user','User\UserController')->middleware('can:admin,superadmin'
 Route::post('/user/clear-wallet/{id}', 'User\UserController@clearingWallet')->middleware('can:admin,superadmin')->name('user.clear-wallet');
 Route::resource('request','Request\RequestController');
 Route::resource('transaction','Transaction\TransactionController')->middleware('can:admin,superadmin');
+Route::get('comment/reference', 'Comment\CommentController@reference')->middleware('can:reference')->name('comment.reject');
+Route::get('comment/{id}/approveforrequest', 'Comment\CommentController@approveforrequest')->middleware('can:admin,superadmin,expert_two')->name('comment.approve');
+Route::get('comment/{id}/disapproveforrequest', 'Comment\CommentController@disapproveforrequest')->middleware('can:admin,superadmin,expert_two')->name('comment.disapprove');
 Route::resource('comment','Comment\CommentController')->middleware('can:admin,superadmin,expert');
 Route::resource('coupon','Coupon\CouponController')->middleware('can:admin,superadmin');
 Route::resource('option','Option\OptionController')->middleware('can:admin,superadmin');
 Route::resource('option-var','Coupon\OptionVarController')->middleware('can:admin,superadmin');
 Route::resource('option-type','Coupon\OptionTypeController')->middleware('can:admin,superadmin');
-Route::get('comment/reject', 'Comment\CommentController@reject')->name('comment.reject');
+
 
 Route::get('/wallet/order','User\UserWalletController@index')->name('wallet_order')->middleware('can:admin,superadmin');
 Route::put('/wallet/order', 'User\UserWalletController@changeStatus')->name('wallet_order')->middleware('can:admin,superadmin');

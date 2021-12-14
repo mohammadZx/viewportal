@@ -61,6 +61,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('expert_two', function($user){
             return ($user->role == 'expert_two') && $user->getMeta('status', true) == 'active';
         });
+        Gate::define('addcomment', function($user, $request){
+            return (Gate::allows('admin') || Gate::allows('superadmin') || Gate::allows('expert')) && $request->status != 'comment';
+        });
+
+        Gate::define('addreference', function($user, $request){
+            return (Gate::allows('admin') || Gate::allows('superadmin') || Gate::allows('expert_two')) && $request->status == 'reference';
+        });
         
     }
 }

@@ -112,15 +112,24 @@
         </div>
         <div class="field row images">
             @foreach($request->attachment as $image)
-            <div class="col-md-3">
-                <img src="{{getAttachmentById($image->meta_value)}}" alt="">
-            </div>
+            @php $attachmentById = getAttachmentById($image->meta_value); @endphp
+            @if(istype($attachmentById, 'image'))
+                    <div class="col-md-3">
+                    <button class="btn btn-viewer" data-src="{{$attachmentById}}" type="button" data-toggle="modal" data-target=".popupviewer"><i class="fa fa-eye"></i></button>
+                    <img src="{{$attachmentById}}" alt="">
+                    </div>
+                @endif
+                @if(istype($attachmentById, 'audio'))
+                    <div class="col-md-6">
+                    <audio src="{{$attachmentById}}" controls preload="none"></audio>
+                    </div>
+                @endif
             @endforeach
         </div>
         <hr>
         <div class="field row images">
             <div class="">
-                <input accept="image/*" class="d-none reqfile" type="file" id="files0" name="files[]" />
+                <input accept="image/*,audio/*" class="d-none reqfile" type="file" id="files0" name="files[]" />
             </div>
             <div class="col-md-3">
                 <label for="files0" class="labelfor">
@@ -137,41 +146,4 @@
     </div>
    </div>
 
-
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-   <script>
-    var requestCounter = 0;
-    var imageCounter = $('.image-count-box').attr('data-count');
-    function requestFileUploader(){
-        $(".reqfile").on("change", function(e) {
-            for (f of this.files) {
-                if(!imageCounter) return;
-                if(f.size >= 300000){
-                    alert('حجم تصویر باید زیر 300 کیلوبایت باشد')
-                     return
-                }
-                $(this).parent().addClass('col-md-3');
-                var obj = URL.createObjectURL(f);
-                $(this).parent().append(`<div class='imgreq'><img class='imageThumb' src='${obj}'> <span class='remove'><i class='fa fa-window-close'></i></span></div>`);
-                requestCounter++;
-                $( `<div class=""> <input accept="image/*" class="d-none reqfile" type="file" id="files${requestCounter}" name="files[]" /> </div>` ).insertAfter($(this).parent());
-                $('.labelfor').attr('for','files'+requestCounter);       
-                imageCounter--;
-                $('.image-count-box .count-image').text(imageCounter);
-                
-                $(".remove").click(function(){
-                    $(this).parent().parent().remove()
-                    if(imageCounter != $('.image-count-box').attr('data-count')){
-                        imageCounter++
-                    }
-                    $('.image-count-box .count-image').text(imageCounter);
-                })
-            }
-            
-            requestFileUploader()
-        });
-    }
-    requestFileUploader()
-    
-   </script>
 @endsection

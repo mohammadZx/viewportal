@@ -54,3 +54,69 @@ function getConfirm() {
 $('.toggleclass').click(function() {
     $($(this).attr('data-class')).toggleClass('active');
 })
+
+
+
+// uploader
+
+
+var requestCounter = 0;
+var imageCounter = $('.image-count-box').attr('data-count');
+
+function requestFileUploader() {
+    $(".reqfile").on("change", function(e) {
+        f = this.files[0]
+        if (!imageCounter) return;
+        if (istype(f, 'image')) {
+            insertStatus = imageHandler(this, f)
+        }
+        if (istype(f, 'audio')) {
+            insertStatus = audioHandler(this, f)
+        }
+
+        if (insertStatus) {
+            requestCounter++;
+            $(`<div class=""> <input accept="image/*,audio/*" class="d-none reqfile" type="file" id="files${requestCounter}" name="files[]" /> </div>`).insertAfter($(this).parent());
+            $('.labelfor').attr('for', 'files' + requestCounter);
+            imageCounter--;
+            $('.image-count-box .count-image').text(imageCounter);
+        }
+
+
+        $(".remove").click(function() {
+            $(this).parent().parent().remove()
+            if (imageCounter != $('.image-count-box').attr('data-count')) {
+                imageCounter++
+            }
+            $('.image-count-box .count-image').text(imageCounter);
+        })
+        requestFileUploader()
+    });
+}
+requestFileUploader()
+
+function imageHandler(object, f) {
+    if (f.size >= 300000) {
+        alert('حجم تصویر باید زیر 300 کیلوبایت باشد')
+        return false;
+    }
+    var obj = URL.createObjectURL(f);
+    $(object).parent().addClass('col-md-3');
+    $(object).parent().append(`<div class='imgreq'><img class='imageThumb' src='${obj}'> <span class='remove'><i class='fa fa-window-close'></i></span></div>`);
+    return true;
+}
+
+function audioHandler(object, f) {
+    if (f.size >= 10000000) {
+        alert('حجم صوت باید زیر 10 مگابایت باشد')
+        return false;
+    }
+    var obj = URL.createObjectURL(f);
+    $(object).parent().addClass('col-md-3');
+    $(object).parent().append(`<div class='imgreq'><audio src="${obj}" controls width="100%" style="max-width: 100%;" ></audio> <span class='remove'><i class='fa fa-window-close'></i></span></div>`);
+    return true;
+}
+
+function istype(file, type) {    
+    return file && file['type'].split('/')[0] === type;
+}
