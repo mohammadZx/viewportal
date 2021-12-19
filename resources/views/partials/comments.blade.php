@@ -2,9 +2,34 @@
 @foreach($comments as $comment)
 <div class="display-comment">
     <strong><span class="name">{{ $comment->user->name }}</span> | <span class="time">{{$comment->created_at}}</span> | <span class="type">عنوان: {{__('auth.'.$comment->user->role)}}</span></strong>
-    <div class="content">
-        {!! $comment->content !!}
-    </div>
+    <br>
+    <table class="table table-bordered">
+        <tr>
+            <th>Status</th>
+            <td>{{ $comment->getMeta('status', true) ? 'تایید شده توسط کارشناس دوم' : 'بدون وضعیت' }}</td>
+        </tr>
+        <tr>
+            <th>Graph</th>
+            <td>{{ $comment->getMeta('graph', true) }}</td>
+        </tr>
+        <tr>
+            <th>Tech</th>
+            <td>{{ $comment->tech }}</td>
+        </tr>
+        <tr>
+            <th>Interpretation</th>
+            <td>{{ $comment->interpretation }}</td>
+        </tr>
+        <tr>
+            <th>Diagnosis</th>
+            <td>{{ $comment->diagnosis }}</td>
+        </tr>
+        <tr>
+            <th>Comment</th>
+            <td>{!! $comment->content !!}</td>
+        </tr>
+    </table>
+
     <div class="row attachment comment images">
      @foreach($comment->getMeta('attachment') as $image)
      @php $attachmentById = getAttachmentById($image->meta_value); @endphp

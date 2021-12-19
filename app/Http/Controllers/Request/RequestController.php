@@ -15,17 +15,32 @@ class RequestController extends Controller
      */
     public function index()
     {
-        
+        $pipelines = Req::query();
+        if(request()->is('user/requests')){
+            $pipelines->whereHas('transaction', function($q){
+                $q->where('user_id', auth()->user()->id);
+            });
+        }else{
+            if(auth()->user()->can('customer')){
+                $pipelines->whereHas('transaction', function($q){
+                    $q->where('user_id', auth()->user()->id);
+                });
+            }elseif(auth()->user()->can('expert_one')){
+                $pipelines->where('requests.status', '<>', 'comment')->where('requests.status', '<>', 'reference');
+            }elseif(auth()->user()->can('expert_two')){
+                $pipelines->where('requests.status', '<>', 'comment');
+            }elseif(auth()->user()->can('admin')){
+    
+            }else{
+            $pipelines->whereHas('transaction', function($q){
+                    $q->where('user_id', auth()->user()->id);
+                });
+            }
+        }
   
-        $pipelines = app(Pipeline::class)
-        ->send(Req::query())
-        ->through([
-            new \App\Policies\AdminPolicy(),
-            new \App\Policies\ExpertOnePolicy(),
-            new \App\Policies\ExpertTwoPolicy(),
-            new \App\Policies\CustomerPolicy(),
-        ])
-        ->thenReturn();
+        
+        
+
         $requests = $pipelines->select('requests.*')
         ->leftJoin('transactions', function($q){
             $q->on('transactions.id', 'requests.transaction_id');

@@ -11077,8 +11077,12 @@ button.btn.btn-viewer {
 }
 
 .display-comment {
-  padding-right: 15px;
+  padding-right: 0;
   margin-top: 15px;
+}
+
+.display-comment .display-comment {
+  padding-right: 35px;
 }
 
 .attachment.comment {
@@ -11102,6 +11106,26 @@ button.btn.btn-viewer {
   margin-right: auto;
   margin-left: auto;
   transition: 0.5s all;
+}
+
+.btn-check:checked + label {
+  color: white;
+  background: #38c172;
+}
+
+label.btn {
+  font-size: 11px;
+}
+
+.btn-check {
+  display: none;
+}
+
+.comments .title {
+  background: #ffe97d;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
 }
 
 @font-face {

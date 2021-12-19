@@ -20,6 +20,9 @@ class CreateCommentsTable extends Migration
             $table->bigInteger('parent_id')->default(0);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('request_id')->references('id')->on('requests')->onDelete('cascade');
+            $table->string('tech')->nullable();
+            $table->text('interpretation')->nullable();
+            $table->string('diagnosis')->nullable();
             $table->text('content');
             $table->timestamps();
         });

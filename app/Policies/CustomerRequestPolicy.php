@@ -31,7 +31,7 @@ class CustomerRequestPolicy
     public function view(User $user, Request $request)
     {
         if($user->can('admin') || $user->can('superadmin')) return true;
-        if($user->can('expert') && $request->status != 'comment') return true;
+        if($user->can('expert')) return true;
         return $user->id == $request->transaction->user_id;
     }
 

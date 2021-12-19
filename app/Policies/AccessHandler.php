@@ -11,6 +11,10 @@ abstract class AccessHandler{
 
         if(auth()->user()->can($this->filterName())){
             $builder =  $this->applyFilter($builder);   
+        }else{
+            $builder = $builder->whereHas('transaction', function($q){
+                $q->where('user_id', auth()->user()->id);
+            });
         }
         return $builder;
     }

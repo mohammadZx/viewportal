@@ -9,7 +9,9 @@ use App\Transaction;
 class UserWalletController extends Controller
 {
     public function index(){
-        $transactions = auth()->user()->transactions()->where('name', 'WALLET')->orWhere('name','WALLET_CHARGE')->get();
+        $transactions = Transaction::where('user_id', auth()->user()->id)->where(function($q){
+            $q->where('name', 'WALLET')->orWhere('name','WALLET_CHARGE');
+        })->get();
         return view('wallet.index', [
             'transactions' => $transactions
         ]);
