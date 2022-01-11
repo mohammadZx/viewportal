@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Request;
 
+use App\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Request as Req;
 use Illuminate\Pipeline\Pipeline;
+use PDF;
+
 class RequestController extends Controller
 {
     /**
@@ -89,6 +92,14 @@ class RequestController extends Controller
         return view('customer.request.show', [
             'request' => $req
         ]);
+    }
+
+    public function pdf($id){
+        $req = Comment::findOrFail($id);
+        $request = Req::findOrFail($req->request_id);
+        $this->authorize('view', [$request]);
+        $pdf = PDF::loadView('customer.request.pdf', ['comment' => $req, 'request' => $request]);
+	     $pdf->stream('document.pdf');
     }
 
     /**

@@ -2,6 +2,7 @@
 @foreach($comments as $comment)
 <div class="display-comment">
     <strong><span class="name">{{ $comment->user->name }}</span> | <span class="time">{{$comment->created_at}}</span> | <span class="type">عنوان: {{__('auth.'.$comment->user->role)}}</span></strong>
+    <a href="{{route('user.request_pdf', $comment->id)}}" target="_blank">چاپ</a>
     <br>
     <table class="table table-bordered">
         <tr>

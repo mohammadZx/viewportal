@@ -35,6 +35,7 @@ Route::prefix('/user')->name('user.')->group(function(){
     Route::get('/transactions', 'Transaction\TransactionController@index')->name('transactions');
     Route::get('/requests', 'Request\RequestController@index')->name('requests');
     Route::get('/request/{id}', 'Request\RequestController@show')->name('request');
+    Route::get('/request/{id}/pdf', 'Request\RequestController@pdf')->name('request_pdf');
 
     /** -------------- WALLET ---------------  **/
     Route::get('wallet','Wallet\UserWalletController@index')->name('wallet');
